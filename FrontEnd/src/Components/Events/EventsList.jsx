@@ -129,7 +129,7 @@ function EventsList({ token }) {
                     </button>
                   </div>
                 )}
-              <span style={{ position: "relative", bottom: "15px" }}>
+              <span>
                 {event.name}
               </span>
             </h2>
