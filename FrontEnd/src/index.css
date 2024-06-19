@@ -1,0 +1,6 @@
+body {
+  background-image: url("./public/background3.avif"),
+    linear-gradient(45deg, hsl(0, 0%, 50%), hsl(0, 0%, 90%));
+  background-repeat: no-repeat;
+  min-height: 100dvh;
+}

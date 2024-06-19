@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+}
+.header ul {
+  margin-top: 15px;
+  margin-right: 30px;
+  margin-left: auto;
+}
+.header a {
+  text-decoration: none;
+  color: hsl(0, 0%, 50%);
+  font-weight: 500;
+  margin-top: 20px;
+  font-size: x-large;
+}
+.header a:hover {
+  color: hsl(0, 0%, 30%);
+  text-decoration: underline;
+}

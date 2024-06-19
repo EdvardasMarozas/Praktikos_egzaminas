@@ -1,0 +1,21 @@
+.eventDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 70dvh;
+}
+.eventDetail h1 {
+  font-size: 3rem;
+}
+
+.eventDetail input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+.eventDetail input:focus {
+  outline: none;
+  border-bottom: 2px solid black;
+}
