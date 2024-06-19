@@ -29,4 +29,6 @@ npx prisma generate
 6. Paleiskite backend serverį:
 npm run start
 
+Taip pat svarbu pasileisti serveri, pvz: per xampp programa; 
+
 Tada belieka tik nueiti į pačia svetaine. Sveitainės adresas yra: http://localhost:5173/
