@@ -17,9 +17,11 @@ function EventDetails({ token }) {
 
   const getTime = (input) => {
     if (typeof input === "string") {
-      return input.substring(11, 16);
+      const number = Number(input.substring(11, 13)) + 3;
+      return `${number}${input.substring(13, 16)}`;
     }
-    return input.toISOString().substring(11, 16);
+    const number = Number(input.toISOString().substring(11, 13)) + 3;
+    return `${number}${input.toISOString().substring(13, 16)}`;
   };
 
   useEffect(() => {
@@ -31,7 +33,6 @@ function EventDetails({ token }) {
       const response = await fetch(`http://localhost:3000/api/events/${id}`);
       const data = await response.json();
       setEvent(data);
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error fetching event:", error);
@@ -62,8 +63,11 @@ function EventDetails({ token }) {
             <span className="fs-3">Laikas:</span>{" "}
             {event.date && getTime(event.date)}
           </h5>
+            <span className="fs-3">Nuotrauka:</span>
           <h5>
-            <span className="fs-3">Nuotrauka:</span> {event.photo}
+            <img src={event.photo && `http://localhost:3000/images/${event.photo}`}
+             alt={event.name} className="w-50 rounded mx-3"
+              />
           </h5>
         </div>
       </div>

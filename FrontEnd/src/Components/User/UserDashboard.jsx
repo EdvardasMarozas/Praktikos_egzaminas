@@ -17,6 +17,7 @@ function UserDashboard({ token }) {
   const [showMyEvents, setShowMyEvents] = useState(false);
   const [role, setRole] = useState("");
   const [blocked, setBlocked] = useState(false);
+  const [showBlocked, setShowBlocked] = useState(false);
   const navigate = useNavigate();
 
   function getDate(input) {
@@ -27,9 +28,11 @@ function UserDashboard({ token }) {
   }
   function getTime(input) {
     if (typeof input === "string") {
-      return input.substring(11, 16);
+      const number = Number(input.substring(11, 13)) + 3;
+      return `${number}${input.substring(13, 16)}`;
     }
-    return input.toISOString().substring(11, 16);
+    const number = Number(input.toISOString().substring(11, 13)) + 3;
+    return `${number}${input.toISOString().substring(13, 16)}`;
   }
 
   useEffect(() => {
@@ -58,6 +61,7 @@ function UserDashboard({ token }) {
       setUserId(response.data.id);
       setRole(response.data.role);
       setBlocked(response.data.blocked);
+      setShowBlocked(response.data.blocked);
       return response.data;
     } catch (error) {
       console.error("Fetching user role failed:", error);
@@ -111,6 +115,7 @@ function UserDashboard({ token }) {
               setNewPassword("");
               setShowCreateEvent(false);
               setShowMyEvents(false);
+              setShowBlocked(false);
             }}
           >
             Pakeisti Slaptažodį
@@ -125,6 +130,7 @@ function UserDashboard({ token }) {
               setEditUserId(null);
               setNewPassword("");
               setShowMyEvents(false);
+              blocked ? setShowBlocked(true) : setShowBlocked(false);
             }}
           >
             Sukūrti Renginį
@@ -137,6 +143,7 @@ function UserDashboard({ token }) {
               setShow(false);
               setEditUserId(null);
               getMyEvents(token);
+              blocked ? setShowBlocked(true) : setShowBlocked(false);
             }}
           >
             Mano Renginiai
@@ -162,11 +169,14 @@ function UserDashboard({ token }) {
             </button>
           </div>
         )}
-        {(showCreateEvent && !blocked) && <EventForm token={token} />}
-        {blocked && (
-          <div className="fs-1 text-center text-danger">Esate blokuotas sukūrti naujus renginiuss</div>
+        {showCreateEvent && !blocked && <EventForm token={token} />}
+        {showBlocked && (
+          <div className="fs-1 text-center text-danger">
+            Esate blokuotas
+            <p>Prašome susisiekti su administratoriumi</p>
+          </div>
         )}
-        {showMyEvents && (
+        {showMyEvents && !blocked && (
           <div className="d-flex flex-wrap justify-content-center gap-5">
             {MyEvents.map((event) => (
               <div className="card w-25 bg-warning gap-3" key={event.id}>
@@ -211,6 +221,22 @@ function UserDashboard({ token }) {
                 <p className="card-body">
                   <span className="fw-semibold">Kategorija:</span>{" "}
                   {event.category.name}
+                </p>
+                <p className="card-body">
+                  <img
+                    src={
+                      event.photo &&
+                      `http://localhost:3000/images/${event.photo}`
+                    }
+                    alt={event.name}
+                    className="rounded mx-auto d-block"
+                    style={{
+                      width: "13rem",
+                      height: "20dvh",
+                      objectFit: "cover",
+                      marginInline: "auto",
+                    }}
+                  />
                 </p>
                 <p className="card-body">
                   <a

@@ -44,13 +44,12 @@ const Login = ({ setToken }) => {
       );
 
       const token = response.data.token;
-      console.log("Received token:", token);
-
+      const role = response.data.role;
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
       setToken(token);
       setRole(response.data.role);
-      console.log(response.data.role);
-      if (response.data.role === "ADMIN") {
+      if (role === "ADMIN") {
         navigate("/admin");
       } else {
         navigate("/user");

@@ -20,9 +20,11 @@ function EventsList({ token }) {
   }
   function getTime(input) {
     if (typeof input === "string") {
-      return input.substring(11, 16);
+      const number = Number(input.substring(11, 13)) + 3;
+      return `${number}${input.substring(13, 16)}`;
     }
-    return input.toISOString().substring(11, 16);
+    const number = Number(input.toISOString().substring(11, 13)) + 3;
+    return `${number}${input.toISOString().substring(13, 16)}`;
   }
 
   const getUserRole = async (token) => {
@@ -136,6 +138,12 @@ function EventsList({ token }) {
             <p className="card-body">
               <span className="fw-semibold">Kategorija:</span>{" "}
               {event.category.name}
+            </p>
+            <p className="card-body">
+              <img src={event.photo && `http://localhost:3000/images/${event.photo}`} alt={event.name}
+              className="rounded mx-auto d-block"
+              style={{width: "13rem", height: "20dvh", objectFit: "cover", marginInline: "auto"}}
+              />
             </p>
             <p className="card-body">
               <a
